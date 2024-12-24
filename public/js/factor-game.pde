@@ -18,6 +18,7 @@ boolean isMouseOverExitButton = false;
 boolean isPaused = false;
 boolean isMouseOverPauseButton = false;
 boolean showOpening = true;
+boolean scoreSaved = false;  // スコア保存フラグを追加
 
 void setup() {
   size(800, 500);
@@ -251,7 +252,7 @@ class Problem {
   String question;
   
   Problem() {
-    input = "";  // 入力を確実に空文字で初期化
+    input = "";  // 入力を確実��空文字で初期化
     y = 0;
     
     // レベルに応じて因数の範囲を調整
@@ -358,6 +359,7 @@ void resetGame() {
   gameOver = false;
   score = 0;
   speed = selectedSpeed * 0.5;  // スピードをリセット
+  scoreSaved = false;  // スコア保存フラグをリセット
   newProblem();
 }
 
@@ -366,6 +368,7 @@ void returnToLevelSelection() {
   gameStarted = false;
   levelSelected = false;
   score = 0;
+  scoreSaved = false;  // レベル選択に戻る時もフラグをリセット
 }
 
 void showGameOver() {
@@ -378,15 +381,14 @@ void showGameOver() {
   textSize(24);
   text("最終スコア: " + score, width/2, height/2);
   
-  // スコアをサーバーに送信
-  try {
-    if (window != null) {
+  // スコアを1回だけ保存
+  if (!scoreSaved) {
+    try {
       window.saveScore(score, selectedLevel, selectedSpeed);
-    } else {
-      println("window object is not available");
+      scoreSaved = true;  // 保存完了をマーク
+    } catch (Exception e) {
+      println("スコアの保存に失敗しました: " + e.toString());
     }
-  } catch (Exception e) {
-    println("スコアの保存に失敗しました: " + e.toString());
   }
   
   textSize(18);

@@ -9,6 +9,8 @@ class GameScore extends Model
 {
     use HasFactory;
 
+    protected $table = 'game_scores';
+
     /**
      * The attributes that are mass assignable.
      *
