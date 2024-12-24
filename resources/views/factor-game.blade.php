@@ -20,6 +20,24 @@
   <!-- Processing.jsのキャンバス -->
   <canvas id="factorGameCanvas" width="800" height="500" data-processing-sources="{{ asset('js/factor-game.pde') }}"></canvas>
 
+  <div class="ranking-container">
+    <h2>ランキング</h2>
+    <table class="ranking-table">
+        <thead>
+            <tr>
+                <th>順位</th>
+                <th>ユーザー名</th>
+                <th>レベル</th>
+                <th>スピード</th>
+                <th>スコア</th>
+            </tr>
+        </thead>
+        <tbody id="rankingBody">
+            {{-- JavaScriptで動的に追加 --}}
+        </tbody>
+    </table>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     // グローバルスコープで関数を定義
@@ -51,6 +69,36 @@
         let canvas = document.getElementById('factorGameCanvas');
         let processingInstance = Processing.getInstanceById('factorGameCanvas');
     };
+
+    function updateRankings() {
+        $.ajax({
+            url: '{{ route("game.rankings") }}',  // ルートを追加する必要があります
+            method: 'GET',
+            success: function(response) {
+                const rankingBody = document.getElementById('rankingBody');
+                rankingBody.innerHTML = '';
+                
+                response.forEach((score, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${score.user.name}</td>
+                        <td>${score.level}</td>
+                        <td>${score.speed}</td>
+                        <td>${score.score}</td>
+                    `;
+                    rankingBody.appendChild(row);
+                });
+            },
+            error: function(error) {
+                console.error('ランキング取得エラー:', error);
+            }
+        });
+    }
+
+    // ページ読み込み時とゲームオーバー時にランキングを更新
+    document.addEventListener('DOMContentLoaded', updateRankings);
+    window.updateRankings = updateRankings;  // Processing.jsから呼び出せるようにグローバルに設定
   </script>
 </body>
 </html>

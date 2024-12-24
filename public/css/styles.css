@@ -171,3 +171,38 @@ p {
   transform: translateY(0);
   /* 押したときに元に戻る */
 }
+
+.ranking-container {
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.ranking-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.ranking-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.ranking-table tr:hover {
+  background-color: #f2f2f2;
+}

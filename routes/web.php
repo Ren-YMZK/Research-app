@@ -29,4 +29,8 @@ Route::middleware('auth')->group(function () {
 Route::post('/game/save-score', [GameScoreController::class, 'store'])
     ->name('game.save-score')
     ->middleware('auth');
+
+Route::get('/game/rankings', [GameScoreController::class, 'getRankings'])
+    ->name('game.rankings');
+
 require __DIR__ . '/auth.php';

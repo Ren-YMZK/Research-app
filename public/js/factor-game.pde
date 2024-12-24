@@ -252,7 +252,7 @@ class Problem {
   String question;
   
   Problem() {
-    input = "";  // 入力を確実��空文字で初期化
+    input = "";  // 入力を確実に空文字で初期化
     y = 0;
     
     // レベルに応じて因数の範囲を調整
@@ -385,7 +385,8 @@ void showGameOver() {
   if (!scoreSaved) {
     try {
       window.saveScore(score, selectedLevel, selectedSpeed);
-      scoreSaved = true;  // 保存完了をマーク
+      window.updateRankings();  // ランキングを更新
+      scoreSaved = true;
     } catch (Exception e) {
       println("スコアの保存に失敗しました: " + e.toString());
     }

@@ -48,4 +48,14 @@ class GameScoreController extends Controller
             ], 500);
         }
     }
+
+    public function getRankings()
+    {
+        $rankings = GameScore::with('user')
+            ->orderBy('score', 'desc')
+            ->take(10)  // 上位10件を取得
+            ->get();
+
+        return response()->json($rankings);
+    }
 }
