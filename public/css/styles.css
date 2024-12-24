@@ -12,12 +12,13 @@ body {
 
 .container {
   max-width: 800px;
-  margin: 50px auto;
+  margin: 80px auto 50px;
   padding: 30px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
+  position: relative;
 }
 
 h1 {
@@ -75,24 +76,70 @@ p {
   /* 押したときに元に戻る */
 }
 
-/* レスポンシブデザイン */
-@media (max-width: 600px) {
-  .container {
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 2em;
-  }
-
-  .game-button {
-    padding: 10px 0;
-    /* 上下のパディングを設定 */
-    width: 200px;
-    /* 幅を調整 */
-    font-size: 16px;
-  }
+/* 認証関連のスタイル */
+.auth-links {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  z-index: 1000;
 }
+
+.auth-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.auth-link:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.auth-link:active {
+  transform: translateY(0);
+}
+
+.user-name {
+  color: #007bff;  /* ブルー */
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.logout-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #dc3545;  /* 赤色 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+.logout-button:active {
+  transform: translateY(0);
+}
+
+.logout-form {
+  display: inline;
+}
+
 
 /* factor-game.blade.phpのcss */
 
