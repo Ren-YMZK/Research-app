@@ -378,11 +378,20 @@ void showGameOver() {
   textSize(24);
   text("最終スコア: " + score, width/2, height/2);
   
+  // スコアをサーバーに送信
+  try {
+    if (window != null) {
+      window.saveScore(score, selectedLevel, selectedSpeed);
+    } else {
+      println("window object is not available");
+    }
+  } catch (Exception e) {
+    println("スコアの保存に失敗しました: " + e.toString());
+  }
+  
   textSize(18);
   text("Enterキーを押して再開", width/2, height/2 + 60);
   text("Spaceキーを押してレベル選択に戻る", width/2, height/2 + 90);
-  
-  // 残り時間の表示と自動終了のチェックを削除
 }
 
 void drawExitButton() {
