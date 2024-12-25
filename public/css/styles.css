@@ -206,3 +206,102 @@ p {
 .ranking-table tr:hover {
   background-color: #f2f2f2;
 }
+
+/* マッチング画面用のスタイル */
+.matching-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.matching-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.matching-container .room-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 20px;
+}
+
+.matching-container .room-item {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.matching-container .room-item.playing {
+    background-color: #f5f5f5;
+}
+
+.matching-container .room-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.matching-container .room-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.matching-container #connectionStatus {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.matching-container #connectionStatus.connected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.matching-container #connectionStatus.disconnected {
+    background-color: #f44336;
+    color: white;
+}
+
+.matching-container button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.matching-container button:hover {
+    background-color: #45a049;
+}
+
+.matching-container button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* 対戦画面のヘッダー用スタイル */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.player-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.vs {
+    font-weight: bold;
+    color: #666;
+}

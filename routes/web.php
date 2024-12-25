@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameScoreController;
+use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,5 +33,14 @@ Route::post('/game/save-score', [GameScoreController::class, 'store'])
 
 Route::get('/game/rankings', [GameScoreController::class, 'getRankings'])
     ->name('game.rankings');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/match', [GameController::class, 'showMatchingScreen'])->name('match');
+    Route::get('/game-multi/{roomId}', [GameController::class, 'showMultiplayerGame'])->name('game.multi');
+});
+
+Route::get('/game-matching', function () {
+    return view('game-matching');
+})->name('game-matching')->middleware('auth');
 
 require __DIR__ . '/auth.php';

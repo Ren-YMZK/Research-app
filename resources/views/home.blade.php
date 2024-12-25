@@ -11,8 +11,8 @@
         <h1>Welcome to Research App</h1>
         <p>This is the app of my research.</p>
         <div class="game-links">
-            <a href="{{ route('factor-game') }}" class="game-button">因数分解ゲームを始める</a>
-            <a href="#" class="game-button">他のゲームを追加</a>
+            <a href="{{ route('factor-game') }}" class="game-button">因数分解ゲーム(ソロ)</a>
+            <a href="{{ route('game-matching') }}" class="game-button">因数分解ゲーム(マルチ)</a>
         </div>
         <div class="auth-links">
             @guest

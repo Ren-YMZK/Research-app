@@ -1,49 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>因数分解ゲーム - オンライン対戦</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ asset('js/processing.min.js') }}"></script>
-    <script src="{{ asset('js/factor-game-multi.pde') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>因数分解対戦</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <script src="{{ asset('js/processing.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <a href="{{ route('home') }}" class="back-button">戻る</a>
-    
-    <div class="room-info">
-        <h3>ルームID: {{ $roomId }}</h3>
-        <p>このIDを対戦相手に共有してください</p>
-        <input type="text" value="{{ url('/factor-game-multi/join/' . $roomId) }}" readonly>
-        <button onclick="copyRoomUrl()">URLをコピー</button>
-    </div>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="player-info">
+                <span>あなた: <span id="myScore">0</span>点</span>
+                <span class="vs">VS</span>
+                <span>対戦相手: <span id="opponentScore">0</span>点</span>
+            </div>
+            <div id="connectionStatus">接続中...</div>
+        </div>
 
-    <div id="game-container">
-        <canvas id="factorGameCanvas" width="800" height="500" 
-                data-processing-sources="{{ asset('js/factor-game-multi.pde') }}"></canvas>
-        <div id="opponent-info">
-            <h3>対戦相手の状況</h3>
-            <p>スコア: <span id="opponent-score">0</span></p>
+        <div id="gameCanvas" class="canvas-container">
+            <canvas id="factorGameCanvas" data-processing-sources="{{ asset('js/factor-game-multi.pde') }}"></canvas>
         </div>
     </div>
 
     <script>
-        window.Echo.channel('game.' + '{{ $roomId }}')
-            .listen('GameStateUpdate', (e) => {
-                document.getElementById('opponent-score').textContent = e.gameState.score;
-                const pjs = Processing.getInstanceById('factorGameCanvas');
-                if (pjs) {
-                    pjs.updateOpponentState(e.gameState);
-                }
-            });
+        let ws;
+        const roomId = '{{ $roomId }}';
+        
+        function connectWebSocket() {
+            ws = new WebSocket('ws://127.0.0.1:8090');
 
-        function copyRoomUrl() {
-            const input = document.querySelector('.room-info input');
-            input.select();
-            document.execCommand('copy');
-            alert('URLをコピーしました');
+            ws.onopen = function() {
+                $('#connectionStatus').text('接続しました').addClass('connected');
+                ws.send(JSON.stringify({
+                    type: 'join_room',
+                    roomId: roomId,
+                    userId: '{{ Auth::id() }}'
+                }));
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'game_start' && window.pjs) {
+                    window.pjs.startGame(data.problem);
+                }
+            };
+
+            ws.onclose = function() {
+                $('#connectionStatus').text('接続が切れました').addClass('disconnected');
+                alert('接続が切れました。ページを更新してください。');
+            };
         }
+
+        $(document).ready(connectWebSocket);
     </script>
 </body>
 </html>
