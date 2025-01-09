@@ -209,99 +209,187 @@ p {
 
 /* マッチング画面用のスタイル */
 .matching-container {
-    max-width: 800px;
+    padding: 1.5rem 0;
+}
+
+.matching-content {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 1.5rem;
 }
 
-.matching-container header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.matching-container .room-list {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    margin-top: 20px;
-}
-
-.matching-container .room-item {
+.matching-card {
     background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.matching-inner {
+    padding: 1.5rem;
+}
+
+.matching-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.room-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.room-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
 }
 
-.matching-container .room-item.playing {
-    background-color: #f5f5f5;
+.room-title {
+    font-size: 1.125rem;
+    font-weight: 600;
 }
 
-.matching-container .room-info h3 {
-    margin: 0 0 10px 0;
-    color: #333;
+.room-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
-.matching-container .room-info p {
-    margin: 5px 0;
-    color: #666;
+.status-empty {
+    background-color: #dcfce7;
+    color: #166534;
 }
 
-.matching-container #connectionStatus {
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: bold;
+.status-waiting {
+    background-color: #fef9c3;
+    color: #854d0e;
 }
 
-.matching-container #connectionStatus.connected {
-    background-color: #4CAF50;
-    color: white;
+.status-playing {
+    background-color: #fee2e2;
+    color: #991b1b;
 }
 
-.matching-container #connectionStatus.disconnected {
-    background-color: #f44336;
-    color: white;
+.room-info {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #4b5563;
 }
 
-.matching-container button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
+.player-list {
+    margin-top: 0.5rem;
+}
+
+.player-item {
+    padding-left: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.room-button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
     color: white;
     cursor: pointer;
-    font-weight: bold;
+    transition: background-color 0.15s;
 }
 
-.matching-container button:hover {
-    background-color: #45a049;
+.join-button {
+    background-color: #3b82f6;
 }
 
-.matching-container button:disabled {
-    background-color: #cccccc;
+.join-button:hover {
+    background-color: #2563eb;
+}
+
+.leave-button {
+    background-color: #ef4444;
+}
+
+.leave-button:hover {
+    background-color: #dc2626;
+}
+
+.disabled-button {
+    background-color: #d1d5db;
     cursor: not-allowed;
 }
 
-/* 対戦画面のヘッダー用スタイル */
-.game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+@media (max-width: 1024px) {
+    .rooms-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .rooms-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.room-list {
     margin-bottom: 20px;
 }
 
-.player-info {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+.room {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-.vs {
-    font-weight: bold;
-    color: #666;
+.room-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.room-players {
+    margin: 10px 0;
+}
+
+.player-name {
+    margin-left: 15px;
+}
+
+.room-actions {
+    margin-top: 15px;
+}
+
+.btn-join {
+    background: #1a56db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+}
+
+.btn-leave {
+    background: #dc2626;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+}
+
+.btn-disabled {
+    background: #9ca3af;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: not-allowed;
 }

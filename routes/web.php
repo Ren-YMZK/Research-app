@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameScoreController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameMatchingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,6 +13,10 @@ Route::get('/', function () {
 Route::get('/factor-game', function () {
     return view('factor-game');
 })->name('factor-game');
+
+Route::get('/factor-game-cpu', function () {
+    return view('factor-game-cpu');
+})->name('factor-game-cpu');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,12 +40,15 @@ Route::get('/game/rankings', [GameScoreController::class, 'getRankings'])
     ->name('game.rankings');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/match', [GameController::class, 'showMatchingScreen'])->name('match');
-    Route::get('/game-multi/{roomId}', [GameController::class, 'showMultiplayerGame'])->name('game.multi');
+    Route::get('/match', [GameMatchingController::class, 'index'])->name('match');
+    Route::post('/room/{roomId}/join', [GameMatchingController::class, 'join'])->name('room.join');
+    Route::post('/room/{roomId}/leave', [GameMatchingController::class, 'leave'])->name('room.leave');
 });
 
-Route::get('/game-matching', function () {
-    return view('game-matching');
-})->name('game-matching')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/game-matching', [GameMatchingController::class, 'index'])->name('game.matching');
+    Route::post('/room/{roomId}/join', [GameMatchingController::class, 'join'])->name('room.join');
+    Route::post('/room/{roomId}/leave', [GameMatchingController::class, 'leave'])->name('room.leave');
+});
 
 require __DIR__ . '/auth.php';
