@@ -226,14 +226,12 @@ void keyPressed() {
             if (playerProblem.input.length() > 0) {
                 playerProblem.input = playerProblem.input.substring(0, playerProblem.input.length() - 1);
             }
-        } else {
-            if (key >= '0' && key <= '9') {
-                playerProblem.input += str(key - '0');
-            } else if (key == ' ') {
-                playerProblem.input += " ";
-            } else if (key == '-') {
-                playerProblem.input += "-";
-            }
+        } else if (key == ' ') {
+            playerProblem.input += " ";
+        } else if (key >= '0' && key <= '9') {
+            playerProblem.input += str(key - '0');
+        } else if (key == '-') {
+            playerProblem.input += "-";
         }
     }
 }
@@ -273,11 +271,11 @@ void checkPlayerAnswer() {
 class Problem {
   int a, b;
   float y;
-  String input = "";
+  String input;  // 初期化を修正
   String question;
   
   Problem() {
-    input = "";  // 入力を確実に空文字で初期化
+    input = "";  // 空文字で初期化
     y = 0;
     
     // レベルに応じて因数の範囲を調整
