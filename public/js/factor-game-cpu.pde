@@ -248,34 +248,38 @@ void checkPlayerAnswer() {
     
     if (numbers.length == 2) {
         try {
-            int num1 = Integer.parseInt(numbers[0]);
-            int num2 = Integer.parseInt(numbers[1]);
+            int num1 = int(numbers[0]);
+            int num2 = int(numbers[1]);
             
+            // 回答が正しいかチェック（順序は関係なし）
             if ((num1 == playerProblem.a && num2 == playerProblem.b) || 
                 (num1 == playerProblem.b && num2 == playerProblem.a)) {
                 playerScore++;
+                playerProblem.input = "";
                 newProblem();
+                
+                // 勝敗判定
+                if (abs(playerScore - cpuScore) >= 3) {
+                    gameOver = true;
+                }
             } else {
                 playerProblem.input = "";
             }
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             playerProblem.input = "";
         }
     }
-    
-    // 勝敗判定
-    checkWinCondition();
 }
 
 
 class Problem {
   int a, b;
   float y;
-  String input;  // 初期化を修正
+  String input;
   String question;
   
   Problem() {
-    input = "";  // 空文字で初期化
+    input = "";
     y = 0;
     
     // レベルに応じて因数の範囲を調整
@@ -299,19 +303,10 @@ class Problem {
     }
     
     // 因数を生成
-    a = int(random(minFactor, maxFactor + 1));
-    b = int(random(minFactor, maxFactor + 1));
-    
-    // レベル1では0を避る、他のレベルでは0を因数に含めない
-    if (selectedLevel == 1) {
-      while (a == 0 || b == 0) {
-        a = int(random(minFactor, maxFactor + 1));
-        b = int(random(minFactor, maxFactor + 1));
-      }
-    } else {
-      while (a == 0) a = int(random(minFactor, maxFactor + 1));
-      while (b == 0) b = int(random(minFactor, maxFactor + 1));
-    }
+    do {
+      a = int(random(minFactor, maxFactor + 1));
+      b = int(random(minFactor, maxFactor + 1));
+    } while (a == 0 || b == 0);  // 0は因数に含めない
     
     // 二次方程式の係数を計算
     int sum = a + b;
@@ -325,7 +320,6 @@ class Problem {
     if (product != 0) {
       question += (product > 0) ? " + " + product : " - " + abs(product);
     }
-  
   }
   
   void display() {
