@@ -301,6 +301,8 @@ class Problem {
         minFactor = 1;
         maxFactor = 5;
     }
+    minFactor = 1;
+    maxFactor = 9;
     
     // 因数を生成
     do {

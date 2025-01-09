@@ -12,7 +12,8 @@
         <p>This is the app of my research.</p>
         <div class="game-links">
             <a href="{{ route('factor-game') }}" class="game-button">因数分解ゲーム(ソロ)</a>
-            <a href="{{ route('game.matching') }}" class="game-button">因数分解ゲーム(マルチ)</a>
+
+            <a href="{{ route('factor-game-cpu') }}" class="game-button">因数分解ゲーム(CPU対戦)</a>
         </div>
         <div class="auth-links">
             @guest
